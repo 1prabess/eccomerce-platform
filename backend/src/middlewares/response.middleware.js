@@ -11,8 +11,26 @@ function responseFormatter(req, res, next) {
       statusMessage: getReasonPhrase(res.statusCode),
     };
 
+    // Pull top-level message if present
+    if (data?.message) {
+      response.message = data.message;
+    }
+
+    // Remove nested message from data or error
+    if (data?.data?.message) {
+      delete data.data.message;
+    }
+    if (data?.error?.message) {
+      delete data.error.message;
+    }
+
+    // Handle success
     if (res.statusCode >= 200 && res.statusCode < 300) {
-      const responseData = data.data ? data.data : data;
+      const responseData = data?.data ?? data;
+
+      // Remove top-level message from here too
+      if (responseData?.message) delete responseData.message;
+
       if (
         responseData &&
         !(
@@ -24,16 +42,23 @@ function responseFormatter(req, res, next) {
       }
     }
 
-    if (res.statusCode > 300) {
+    // Handle error
+    if (res.statusCode >= 400) {
+      const errorData = data?.error ?? data;
+
+      // Remove top-level message from here too
+      if (errorData?.message) delete errorData.message;
+
       if (
-        data &&
-        !(typeof data === "object" && Object.keys(data).length === 0)
+        errorData &&
+        !(typeof errorData === "object" && Object.keys(errorData).length === 0)
       ) {
-        response.error = data;
+        response.error = errorData;
       }
     }
 
-    if (data.pagination) {
+    // Add pagination if available
+    if (data?.pagination) {
       response.pagination = data.pagination;
     }
 
