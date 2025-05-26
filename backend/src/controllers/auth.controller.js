@@ -17,9 +17,9 @@ export const signup = async (req, res) => {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "User with same email already exists." });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "User with same email already exists.",
+      });
 
     // Generate salt and hash password
     const salt = await bcrypt.genSalt();
@@ -45,9 +45,15 @@ export const signup = async (req, res) => {
     // Generate token and set it on cookie
     generateAndSetToken(res, user._id);
 
-    return res
-      .status(StatusCodes.CREATED)
-      .json({ message: "User created successfully!" });
+    return res.status(StatusCodes.CREATED).json({
+      message: "User created successfully!",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.log("Error in signup: ", error);
     return res
@@ -93,9 +99,15 @@ export const adminSignup = async (req, res) => {
     // Generate token and set it on cookie
     generateAndSetToken(res, user._id);
 
-    return res
-      .status(StatusCodes.CREATED)
-      .json({ message: "Admin created successfully!" });
+    return res.status(StatusCodes.CREATED).json({
+      message: "Admin created successfully!",
+      admin: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.log("Error in adminSignup: ", error);
     return res
@@ -106,10 +118,59 @@ export const adminSignup = async (req, res) => {
 
 // ___________Sign In_________________
 export const signin = async (req, res) => {
-  res.send("Sign In");
+  try {
+    const { email, password } = req.body;
+
+    // Check is any field is empty
+    if (!email || !password)
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "All fields are required." });
+
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user)
+      return res
+        .status(StatusCodes.CONFLICT)
+        .json({ message: "Invalid credentials." });
+
+    // Compare password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid)
+      return res
+        .status(StatusCodes.CONFLICT)
+        .json({ message: "Invalid credentials ." });
+
+    generateAndSetToken(res, user._id);
+
+    return res.status(StatusCodes.OK).json({
+      message: "Logged in successfully!",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.log("Error in signin: ", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong. Please try again later." });
+  }
 };
 
 // ___________Logout_________________
 export const logout = async (req, res) => {
-  res.send("logout");
+  try {
+    res.cookie("token", "", { maxAge: 0 });
+    return res.status(StatusCodes.OK).json({
+      message: "Logged out successfully!",
+    });
+  } catch (error) {
+    console.log("Error in logout: ", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong. Please try again later." });
+  }
 };
