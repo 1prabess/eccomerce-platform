@@ -214,3 +214,76 @@ export const verifyAccount = async (req, res) => {
       .json({ message: "Something went wrong. Please try again later." });
   }
 };
+// ___________Forgot Password_________________
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Get the user
+    const user = await User.findOne({ email });
+    if (!user)
+      return res
+        .status(StatusCodes.CONFLICT)
+        .json({ message: "No user found." });
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordTokenExpiresAt = Date.now() + 1000 * 60 * 10;
+
+    await user.save();
+
+    return res.status(StatusCodes.OK).json({
+      message: "Reset password token created!",
+    });
+  } catch (error) {
+    console.log("Error in forgoutPassword: ", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong. Please try again later." });
+  }
+};
+// ___________Reset Password_________________
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    const { newPassword } = req.body;
+
+    if (!token)
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "No reset password token provided." });
+
+    // Get the user
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordTokenExpiresAt: { $gt: Date.now() },
+    });
+
+    if (!user)
+      return res
+        .status(StatusCodes.CONFLICT)
+        .json({ message: "Invalid or expired reset password token." });
+
+    // Generate salt for new password
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password and cleanup tokens
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTokenExpiresAt = undefined;
+
+    await user.save();
+
+    return res.status(StatusCodes.OK).json({
+      message: "Password updated successfully!",
+    });
+  } catch (error) {
+    console.log("Error in forgoutPassword: ", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong. Please try again later." });
+  }
+};
