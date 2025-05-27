@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import connectDb from "./config/db.js";
 import responseFormatter from "./middlewares/response.middleware.js";
 import authRouter from "./routes/auth.route.js";
+import productRouter from "./routes/product.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use(responseFormatter);
 
 app.use("/api", authRouter);
+app.use("/api", productRouter);
 
 app.listen(PORT, async () => {
   try {
