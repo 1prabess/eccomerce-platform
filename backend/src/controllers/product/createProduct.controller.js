@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Product from "../../models/product.model.js";
+import slugify from "slugify";
 
 // ___________Create Product_________________
 export const createProduct = async (req, res) => {
@@ -32,6 +33,11 @@ export const createProduct = async (req, res) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "All fields are required." });
 
+    // Generate slug and attach unique suffix
+    const baseSlug = slugify(name, { lower: true, strict: true });
+    const uniqueSuffix = Math.random().toString(36).substring(2, 6);
+    const slug = `${baseSlug}-${uniqueSuffix}`;
+
     const product = new Product({
       name,
       price,
@@ -44,6 +50,7 @@ export const createProduct = async (req, res) => {
       discount,
       images,
       colors,
+      slug,
     });
 
     await product.save();
