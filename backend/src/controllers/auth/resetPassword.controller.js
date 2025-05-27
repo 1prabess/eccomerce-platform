@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../../models/user.model.js";
 import bcrypt from "bcrypt";
+import { sendResetPasswordSuccessEmail } from "../../utils/email/emailService.js";
 
 // ___________Reset Password_________________
 export const resetPassword = async (req, res) => {
@@ -34,6 +35,9 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordTokenExpiresAt = undefined;
 
     await user.save();
+
+    // Send email
+    await sendResetPasswordSuccessEmail(user.email);
 
     return res.status(StatusCodes.OK).json({
       message: "Password updated successfully!",
