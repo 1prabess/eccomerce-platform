@@ -74,6 +74,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       enum: ["topwear", "bottomwear"],
     },
+
+    slug: {
+      type: String,
+      unique: true,
+    },
   },
   { timestamps: true, versionKey: false }
 );
