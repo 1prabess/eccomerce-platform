@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../../models/user.model.js";
+import { sendWelcomeEmail } from "../../utils/email/emailService.js";
 
 // ___________Verify Account_________________
 export const verifyAccount = async (req, res) => {
@@ -28,6 +29,9 @@ export const verifyAccount = async (req, res) => {
     user.verificationToken = undefined;
 
     await user.save();
+
+    // Send email
+    await sendWelcomeEmail(user.email);
 
     return res.status(StatusCodes.OK).json({
       message: "User verified successfully!",
