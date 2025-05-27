@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcrypt";
 import generateAndSetToken from "../../utils/generateAndSetToken.js";
 import User from "../../models/user.model.js";
+import { sendVerificationEmail } from "../../utils/email/emailService.js";
 
 // ___________Sign up_________________
 export const signup = async (req, res) => {
@@ -38,6 +39,9 @@ export const signup = async (req, res) => {
       verificationToken,
       verificationTokenExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
+
+    // Send email
+    await sendVerificationEmail(verificationToken, email);
 
     // Save user to the database
     await user.save();
