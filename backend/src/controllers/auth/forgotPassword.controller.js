@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../../models/user.model.js";
 import crypto from "crypto";
+import { sendResetPasswordEmail } from "../../utils/email/emailService.js";
 
 // ___________Forgot Password_________________
 export const forgotPassword = async (req, res) => {
@@ -21,8 +22,11 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
+    // Send email
+    await sendResetPasswordEmail(resetToken, email);
+
     return res.status(StatusCodes.OK).json({
-      message: "Reset password token created!",
+      message: "Reset password email sent successfully!",
     });
   } catch (error) {
     console.log("Error in forgoutPassword: ", error);
