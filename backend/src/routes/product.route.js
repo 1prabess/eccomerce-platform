@@ -27,4 +27,11 @@ productRouter.patch(
   updateProduct
 );
 
+productRouter.delete(
+  "/products/:id",
+  authenticate,
+  authorizeRoles("admin"),
+  deleteProduct
+);
+
 export default productRouter;
