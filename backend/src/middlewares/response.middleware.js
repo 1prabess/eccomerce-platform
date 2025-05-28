@@ -24,12 +24,22 @@ function responseFormatter(req, res, next) {
       delete data.error.message;
     }
 
+    // Promote and remove pagination from nested data
+    let pagination;
+    if (data?.data?.pagination) {
+      pagination = data.data.pagination;
+      delete data.data.pagination;
+    } else if (data?.pagination) {
+      pagination = data.pagination;
+    }
+
     // Handle success
     if (res.statusCode >= 200 && res.statusCode < 300) {
       const responseData = data?.data ?? data;
 
-      // Remove top-level message from here too
+      // Remove any leftover message or pagination
       if (responseData?.message) delete responseData.message;
+      if (responseData?.pagination) delete responseData.pagination;
 
       if (
         responseData &&
@@ -46,7 +56,6 @@ function responseFormatter(req, res, next) {
     if (res.statusCode >= 400) {
       const errorData = data?.error ?? data;
 
-      // Remove top-level message from here too
       if (errorData?.message) delete errorData.message;
 
       if (
@@ -57,9 +66,9 @@ function responseFormatter(req, res, next) {
       }
     }
 
-    // Add pagination if available
-    if (data?.pagination) {
-      response.pagination = data.pagination;
+    // Final pagination assignment (once, top-level only)
+    if (pagination) {
+      response.pagination = pagination;
     }
 
     originalJson.call(res, response);
