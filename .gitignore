@@ -32,12 +32,13 @@ Thumbs.db
 *.njsproj
 *.sln
 
-
 coverage/
 **/coverage/
-
 
 pids
 *.pid
 *.seed
 *.pid.lock
+
+# Ignore multer temp files inside backend folder
+/backend/temp/
