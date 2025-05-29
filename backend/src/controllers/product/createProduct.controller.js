@@ -1,6 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import Product from "../../models/product.model.js";
 import slugify from "slugify";
+import cloudinary from "../../config/cloudinary.js";
+import fs from "fs";
 
 // ___________Create Product_________________
 export const createProduct = async (req, res) => {
@@ -13,11 +15,20 @@ export const createProduct = async (req, res) => {
       subCategory,
       sizes,
       discount = 0,
-      images = [],
       colors = [],
       isFeatured = false,
       stock,
     } = req.body;
+
+    let parsedSizes;
+
+    try {
+      parsedSizes = JSON.parse(sizes);
+    } catch (e) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Sizes must be an array." });
+    }
 
     if (
       !name ||
@@ -25,13 +36,29 @@ export const createProduct = async (req, res) => {
       !description ||
       !category ||
       !subCategory ||
-      !Array.isArray(sizes) ||
-      sizes.length === 0 ||
+      !Array.isArray(parsedSizes) ||
+      parsedSizes.length === 0 ||
       stock === undefined
     )
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "All fields are required." });
+
+    // Upload images to Cloudinary
+    let uploadedImages = [];
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "products",
+        });
+
+        uploadedImages.push(result.secure_url);
+
+        // Delete temp file after upload
+        fs.unlinkSync(file.path);
+      }
+    }
 
     // Generate slug and attach unique suffix
     const baseSlug = slugify(name, { lower: true, strict: true });
@@ -48,7 +75,7 @@ export const createProduct = async (req, res) => {
       isFeatured,
       stock,
       discount,
-      images,
+      images: uploadedImages,
       colors,
       slug,
     });
