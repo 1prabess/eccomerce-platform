@@ -5,6 +5,7 @@ import connectDb from "./config/db.js";
 import responseFormatter from "./middlewares/response.middleware.js";
 import authRouter from "./routes/auth.route.js";
 import productRouter from "./routes/product.route.js";
+import orderRouter from "./routes/order.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -17,6 +18,7 @@ app.use(responseFormatter);
 
 app.use("/api", authRouter);
 app.use("/api", productRouter);
+app.use("/api", orderRouter);
 
 app.listen(PORT, async () => {
   try {
