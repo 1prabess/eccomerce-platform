@@ -15,16 +15,19 @@ export const getProducts = async (req, res) => {
     if (category) filters.category = category;
     if (subCategory) filters.subCategory = subCategory;
 
+    // Get products by applying filters and sorting
     const products = await Product.find(filters)
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
 
+    // Get the total number of products
     const totalProducts = await Product.countDocuments();
 
     return res.status(StatusCodes.OK).json({
       message: "Products fetched successfully!",
       products,
+      // Send pagination details
       pagination: {
         totalItems: totalProducts,
         currentPage: page,
@@ -35,7 +38,7 @@ export const getProducts = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("Error in getProduct: ", error);
+    console.log("Error in getProducts: ", error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong. Please try again later." });
