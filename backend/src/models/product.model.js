@@ -48,10 +48,12 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
 
-    reviews: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "review",
-    },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "review",
+      },
+    ],
 
     numReviews: {
       type: Number,
