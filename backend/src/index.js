@@ -7,11 +7,14 @@ import authRouter from "./routes/auth.route.js";
 import productRouter from "./routes/product.route.js";
 import orderRouter from "./routes/order.route.js";
 import reviewRouter from "./routes/review.route.js";
+import cors from "cors";
 
 dotenv.config();
 const PORT = process.env.PORT;
 
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5175", credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
