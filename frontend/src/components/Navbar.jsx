@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="box flex items-center justify-between border-b bg-white px-6 py-4">
       {/* Logo */}
       <div className="text-3xl font-bold text-gray-900">
-        elvee<span className="text-pink-400">.</span>
+        Elvee<span className="text-pink-400">.</span>
       </div>
 
       {/* Navigation Links */}
@@ -24,8 +24,8 @@ const Navbar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/collection" className="hover:text-black">
-            Collection
+          <NavLink to="/products" className="hover:text-black">
+            Products
           </NavLink>
         </li>
         <li>
