@@ -3,7 +3,7 @@ import App from "./App";
 import HomePage from "./features/home/pages/HomePage";
 import Login from "./features/auth/pages/Login";
 import Signup from "./features/auth/pages/Signup";
-import { collectionLoader } from "./features/home/loader";
+import ProductsPage from "./features/products/page/ProductsPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +13,6 @@ export const router = createBrowserRouter([
       {
         path: "/",
         Component: HomePage,
-        loader: collectionLoader,
       },
 
       {
@@ -25,7 +24,7 @@ export const router = createBrowserRouter([
 
       {
         path: "/products",
-        // Component: ProductsPage,
+        Component: ProductsPage,
       },
     ],
   },
