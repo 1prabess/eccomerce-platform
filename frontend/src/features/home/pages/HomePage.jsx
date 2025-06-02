@@ -1,11 +1,19 @@
+import CategoryGrid from "../components/CategoryGrid";
+import Footer from "../components/Footer";
 import Hero from "../components/Hero";
-import LatestCollections from "../components/LatestCollections";
+import LatestProducts from "../components/LatestProducts";
+import Services from "../components/Services";
+import TestimonialSlider from "../components/TestimonialSlider";
 
 function HomePage() {
   return (
     <div className="box">
       <Hero />
-      <LatestCollections />
+      <LatestProducts />
+      <TestimonialSlider />
+      <CategoryGrid />
+      <Services />
+      <Footer />
     </div>
   );
 }
