@@ -9,12 +9,12 @@ const Hero = () => {
 
       <div className="flex w-full flex-col items-center justify-between">
         <div>
-          <div className="mx-auto flex h-full max-w-[90%] flex-col items-center justify-center py-6 text-center sm:max-w-[80%] lg:mt-10 lg:max-w-full">
+          <div className="mx-auto flex h-full max-w-[90%] flex-col items-center justify-center py-6 text-center sm:max-w-[80%] lg:mt-15 lg:max-w-full">
             <h1 className="text-5xl font-semibold text-gray-800 sm:text-6xl md:text-6xl">
               Ultimate
             </h1>
-            <h2 className="stroke-text mt-2 text-[8rem] leading-none font-bold text-transparent sm:text-[10rem] md:text-[10rem] lg:text-[10rem]">
-              Sale
+            <h2 className="stroke-text mt-2 text-[8rem] leading-none font-bold text-transparent sm:text-[8rem] md:text-[8rem] lg:text-[8rem]">
+              SALE
             </h2>
             <p className="mt-4 text-sm tracking-widest text-gray-700 sm:text-base md:text-lg">
               NEW COLLECTION
@@ -23,7 +23,7 @@ const Hero = () => {
               SHOP NOW
             </Button>
 
-            <style jsx>{`
+            <style>{`
               .stroke-text {
                 -webkit-text-stroke: 2px black;
               }
