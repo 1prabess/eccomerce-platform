@@ -12,7 +12,7 @@ export const getReviews = async (req, res) => {
       productId,
     };
 
-    if (rating) query.rating = rating;
+    if (rating && rating != "all") query.rating = rating;
 
     // Check if productId is given or not
     if (!productId)
