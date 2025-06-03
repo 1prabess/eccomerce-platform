@@ -4,6 +4,7 @@ import HomePage from "./features/home/pages/HomePage";
 import Login from "./features/auth/pages/Login";
 import Signup from "./features/auth/pages/Signup";
 import ProductsPage from "./features/products/page/ProductsPage";
+import ProductDetailsPage from "./features/products/page/ProductDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         Component: ProductsPage,
+      },
+      {
+        path: "/products/:productSlug",
+        Component: ProductDetailsPage,
       },
     ],
   },
