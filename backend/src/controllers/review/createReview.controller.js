@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Product from "../../models/product.model.js";
 import Review from "../../models/review.model.js";
+import User from "../../models/user.model.js";
 
 // ___________Create Review_________________
 export const createReview = async (req, res) => {
@@ -22,6 +23,9 @@ export const createReview = async (req, res) => {
         message: "Product not found.",
       });
 
+    // Get user details
+    const user = await User.findById(userId);
+
     // Check if there is already existing review left by the user
     const existingReview = await Review.findOne({ productId, userId });
 
@@ -32,6 +36,7 @@ export const createReview = async (req, res) => {
 
     const review = new Review({
       userId,
+      user: user.fullName,
       productId,
       rating,
       comment,
