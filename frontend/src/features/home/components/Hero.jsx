@@ -54,7 +54,7 @@ const Hero = () => {
           backgroundImage: `repeating-linear-gradient(
             90deg,
             #EAEAEA,
-            #EAEAEA 90px,
+            #EAEAEA 95px,
             white 60px,
             white 100px
           )`,
@@ -96,7 +96,7 @@ const Hero = () => {
           backgroundImage: `repeating-linear-gradient(
            90deg,
             #EAEAEA,
-            #EAEAEA 90px,
+            #EAEAEA 95px,
             white 60px,
             white 100px
           )`,
