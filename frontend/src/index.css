@@ -121,6 +121,6 @@
 
 @layer components {
   .box {
-    @apply mx-auto max-w-[90rem] px-6 md:px-12;
+    @apply mx-auto max-w-[90rem] px-6;
   }
 }
