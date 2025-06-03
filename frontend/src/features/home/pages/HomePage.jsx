@@ -11,8 +11,8 @@ function HomePage() {
       <Hero />
       <LatestProducts />
       <TestimonialSlider />
-      <CategoryGrid />
       <Services />
+      <CategoryGrid />
       <Footer />
     </div>
   );
