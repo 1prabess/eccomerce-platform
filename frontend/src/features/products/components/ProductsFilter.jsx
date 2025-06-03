@@ -7,12 +7,20 @@ const ProductsFilter = ({ filters, setFilters }) => {
   const handleClick = (value, type) => {
     if (value === "All") {
       setFilters({});
-    } else {
-      setFilters((prev) => ({
+      return;
+    }
+
+    setFilters((prev) => {
+      if (prev[type] === value) {
+        const updated = { ...prev };
+        delete updated[type];
+        return updated;
+      }
+      return {
         ...prev,
         [type]: value,
-      }));
-    }
+      };
+    });
   };
 
   return (
