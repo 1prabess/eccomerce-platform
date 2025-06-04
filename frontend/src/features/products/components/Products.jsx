@@ -27,7 +27,7 @@ const Products = ({ filters, setFilters }) => {
         <ProductsFilter filters={filters} setFilters={setFilters} />
       </div>
 
-      <div className="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
         {data?.products.map((product, idx) => (
           <div
             key={idx}
