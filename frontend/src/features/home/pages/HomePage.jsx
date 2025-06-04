@@ -10,9 +10,9 @@ function HomePage() {
     <div className="box">
       <Hero />
       <LatestProducts />
-      <TestimonialSlider />
       <Services />
       <CategoryGrid />
+      <TestimonialSlider />
       <Footer />
     </div>
   );
