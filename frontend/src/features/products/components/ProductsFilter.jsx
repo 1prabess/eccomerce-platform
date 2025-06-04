@@ -29,7 +29,7 @@ const ProductsFilter = ({ filters, setFilters }) => {
         <button
           key={category}
           onClick={() => handleClick(category, "category")}
-          className={`text-sm whitespace-nowrap uppercase ${
+          className={`text-sm whitespace-nowrap ${
             (category === "All" && !filters.category && !filters.subCategory) ||
             filters.category === category
               ? "border-b-2 border-black font-semibold"
@@ -44,7 +44,7 @@ const ProductsFilter = ({ filters, setFilters }) => {
         <button
           key={subCategory}
           onClick={() => handleClick(subCategory, "subCategory")}
-          className={`text-sm whitespace-nowrap uppercase ${
+          className={`text-sm whitespace-nowrap ${
             filters.subCategory === subCategory
               ? "border-b-2 border-black font-semibold"
               : "text-gray-600"
