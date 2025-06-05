@@ -9,6 +9,8 @@ export const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
 
+    console.log(newPassword);
+
     if (!token)
       return res
         .status(StatusCodes.BAD_REQUEST)
@@ -43,7 +45,7 @@ export const resetPassword = async (req, res) => {
       message: "Password updated successfully!",
     });
   } catch (error) {
-    console.log("Error in forgoutPassword: ", error);
+    console.log("Error in resetPassword: ", error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong. Please try again later." });
