@@ -114,7 +114,7 @@ const ProductDetailsPage = () => {
 
       {/* Right: Product details */}
       <div className="flex flex-col py-8 md:mt-4 md:p-8">
-        <h1 className="uppmercase text-4xl font-semibold">{product.name}</h1>
+        <h1 className="text-4xl font-semibold">{product.name}</h1>
 
         <p className="mt-1 text-sm text-gray-500 capitalize">
           Category: {product.category} &mdash; {product.subCategory}
