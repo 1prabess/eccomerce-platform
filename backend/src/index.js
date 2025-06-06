@@ -8,6 +8,7 @@ import productRouter from "./routes/product.route.js";
 import orderRouter from "./routes/order.route.js";
 import reviewRouter from "./routes/review.route.js";
 import cors from "cors";
+import userRouter from "./routes/user.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -24,6 +25,7 @@ app.use("/api", authRouter);
 app.use("/api", productRouter);
 app.use("/api", orderRouter);
 app.use("/api", reviewRouter);
+app.use("/api", userRouter);
 
 app.listen(PORT, async () => {
   try {
