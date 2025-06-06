@@ -9,8 +9,6 @@ export const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
 
-    console.log(newPassword);
-
     if (!token)
       return res
         .status(StatusCodes.BAD_REQUEST)
