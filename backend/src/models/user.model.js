@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
 
+    profilePic: {
+      type: String,
+      default: "",
+    },
+
     isVerified: {
       type: String,
       default: false,
@@ -45,6 +50,14 @@ const userSchema = new mongoose.Schema(
 
     resetPasswordTokenExpiresAt: {
       type: Date,
+    },
+
+    address: {
+      street: { type: String, default: "" },
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      zip: { type: String, default: "" },
+      country: { type: String, default: "" },
     },
   },
   { timestamps: true, versionKey: false }
