@@ -52,7 +52,9 @@ const Navbar = () => {
         <FaSearch />
         <FaUser />
         <div className="relative">
-          <FaShoppingBag />
+          <NavLink to={"/cart"}>
+            <FaShoppingBag />
+          </NavLink>
           <span className="absolute -top-2 -right-2 rounded-full bg-black px-1.5 text-[10px] leading-tight text-white">
             0
           </span>
