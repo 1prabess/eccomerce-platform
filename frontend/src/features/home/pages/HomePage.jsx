@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import CategoryGrid from "../components/CategoryGrid";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
