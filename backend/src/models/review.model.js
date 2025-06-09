@@ -4,7 +4,7 @@ const reviewSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: true,
     },
 
@@ -15,7 +15,7 @@ const reviewSchema = mongoose.Schema(
 
     productId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "product",
+      ref: "Product",
       required: true,
     },
 
