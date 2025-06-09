@@ -8,6 +8,7 @@ import SignupPage from "./features/auth/pages/SignupPage";
 import VerificationPage from "./features/auth/pages/VerificationPage";
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
+import CartPage from "./features/cart/pages/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
       {
         path: "/products/:productSlug",
         Component: ProductDetailsPage,
+      },
+
+      {
+        path: "/cart",
+        Component: CartPage,
       },
     ],
   },
