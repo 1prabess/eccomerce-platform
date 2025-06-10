@@ -9,6 +9,7 @@ import VerificationPage from "./features/auth/pages/VerificationPage";
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
 import CartPage from "./features/cart/pages/CartPage";
+import OrderPage from "./features/order/pages/OrderPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,11 @@ export const router = createBrowserRouter([
       {
         path: "/cart",
         Component: CartPage,
+      },
+
+      {
+        path: "/order",
+        Component: OrderPage,
       },
     ],
   },
