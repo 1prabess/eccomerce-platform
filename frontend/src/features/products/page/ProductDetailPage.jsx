@@ -6,10 +6,12 @@ import Reviews from "../components/Reviews";
 import { StarRating } from "@/components/StarRating";
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useAddItemToCart } from "@/hooks/cart/useAddItemToCart";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
   const { data, isPending, error } = useProduct(productSlug);
+  const { mutate: addToCart } = useAddItemToCart();
   const product = data?.product;
 
   const [currentImage, setCurrentImage] = useState(0);
@@ -67,6 +69,10 @@ const ProductDetailsPage = () => {
     setCurrentImage((prev) =>
       prev < product.images.length - 1 ? prev + 1 : 0,
     );
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart({ productId: product._id, quantity: 1, size: selectedSize });
   };
 
   return (
@@ -200,6 +206,7 @@ const ProductDetailsPage = () => {
 
         <button
           disabled={!selectedSize || product.stock === 0}
+          onClick={() => handleAddToCart(product)}
           className={`mt-4 w-full py-3 text-sm font-semibold uppercase ${
             selectedSize && product.stock > 0
               ? "bg-black text-white hover:opacity-90"
