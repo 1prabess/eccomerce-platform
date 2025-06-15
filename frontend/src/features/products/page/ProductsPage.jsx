@@ -8,7 +8,7 @@ const ProductsPage = () => {
   });
 
   return (
-    <div className="box flex flex-col gap-6 py-6 lg:flex-col">
+    <div className="box flex flex-col gap-6 lg:flex-col">
       <div className="w-full">
         <Products filters={filters} setFilters={setFilters} />
       </div>
