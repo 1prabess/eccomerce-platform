@@ -9,6 +9,6 @@ export const useIncreaseQuantity = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["cart"]);
     },
-    onError: (error) => toast.error(error),
+    onError: (error) => toast.error(error?.response?.data?.message),
   });
 };
