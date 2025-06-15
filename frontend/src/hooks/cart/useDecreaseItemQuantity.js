@@ -7,6 +7,6 @@ export const useDecreaseItemQuantity = () => {
   return useMutation({
     mutationFn: (updateData) => updateItemQuantity(updateData),
     onSuccess: () => queryClient.invalidateQueries(["cart"]),
-    onError: (error) => toast.error(error),
+    onError: (error) => toast.error(error?.response?.data?.message),
   });
 };
