@@ -10,6 +10,7 @@ import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
 import CartPage from "./features/cart/pages/CartPage";
 import OrderPage from "./features/order/pages/OrderPage";
+import OrdersPage from "./features/order/pages/OrdersPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ export const router = createBrowserRouter([
       {
         path: "/order",
         Component: OrderPage,
+      },
+
+      {
+        path: "/orders",
+        Component: OrdersPage,
       },
     ],
   },
