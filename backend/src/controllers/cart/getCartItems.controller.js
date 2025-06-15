@@ -1,10 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import Cart from "../../models/cart.model.js";
 
+// ___________Get All Cart Items_________________
 export const getCartItems = async (req, res) => {
   try {
     const userId = req.user._id;
 
+    // Get cart item and also include product details
     const cartItems = await Cart.find({ userId }).populate("productId");
 
     return res
