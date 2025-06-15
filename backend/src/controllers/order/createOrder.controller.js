@@ -11,6 +11,7 @@ export const createOrder = async (req, res) => {
       shippingAddress,
       paymentMethod = "digital",
       notes,
+      shippingFee,
     } = req.body;
 
     // Calculate total price
@@ -19,9 +20,29 @@ export const createOrder = async (req, res) => {
       totalPrice += item.priceAtPurchase * item.quantity;
     });
 
+    // Add shipping fee
+    if (shippingFee) {
+      totalPrice += shippingFee;
+    } else {
+      totalPrice += 10;
+    }
+
+    // Enrich products with images using a simple for...of loop
+    const enrichedProducts = [];
+    for (const item of products) {
+      const productFromDb = await Product.findById(item.productId).select(
+        "images name"
+      );
+      enrichedProducts.push({
+        ...item,
+        name: productFromDb?.name || "Unknown Product",
+        images: productFromDb ? productFromDb.images : [],
+      });
+    }
+
     const order = new Order({
       userId,
-      products,
+      products: enrichedProducts,
       totalPrice,
       shippingAddress,
       paymentMethod,
@@ -33,10 +54,10 @@ export const createOrder = async (req, res) => {
     // Decrement stock of product once order is placed
     for (const product of products) {
       const productToDecrement = await Product.findById(product.productId);
-
-      if (productToDecrement) productToDecrement.stock -= product.quantity;
-
-      await productToDecrement.save();
+      if (productToDecrement) {
+        productToDecrement.stock -= product.quantity;
+        await productToDecrement.save();
+      }
     }
 
     return res
