@@ -8,7 +8,7 @@ export const useForgotPassword = () => {
     onSuccess: () => {
       toast.success("Reset password link sent");
     },
-    onError: () => {
+    onError: (error) => {
       toast.error(error?.response?.data?.message);
     },
   });

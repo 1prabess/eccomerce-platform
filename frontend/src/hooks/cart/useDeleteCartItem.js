@@ -7,6 +7,6 @@ export const useDeleteCartItem = () => {
   return useMutation({
     mutationFn: (cartItemId) => deleteCartItem(cartItemId),
     onSuccess: () => queryClient.invalidateQueries(["cart"]),
-    onError: (error) => toast.error(error),
+    onError: (error) => toast.error(error?.response?.data?.message),
   });
 };
