@@ -23,7 +23,7 @@ const CategoryGrid = () => {
           <img
             src={cat.image}
             alt={cat.title}
-            className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-fit object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/10 transition-colors duration-300 group-hover:bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white">

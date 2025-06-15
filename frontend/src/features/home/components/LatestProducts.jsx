@@ -2,10 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Spinner from "@/components/Spinner";
 import { useProducts } from "@/hooks/products/useProducts";
-import { StarRating } from "@/components/StarRating"; // Adjust path if needed
+import { StarRating } from "@/components/StarRating";
 
 const LatestProducts = () => {
-  const { data, isPending, error } = useProducts({ limit: 6, page: 1 });
+  const {
+    data: latestProducts,
+    isPending,
+    error,
+  } = useProducts({ limit: 9, page: 1 });
   const navigate = useNavigate();
 
   const handleSelectProduct = (productSlug) => {
@@ -35,7 +39,7 @@ const LatestProducts = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {data?.products.map((product, idx) => (
+        {latestProducts?.products.map((product, idx) => (
           <div
             key={idx}
             className="cursor-pointer overflow-hidden rounded border"

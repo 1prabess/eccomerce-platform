@@ -1,6 +1,10 @@
 const CartSummary = ({ subtotal, shippingFee, total }) => (
   <>
-    <h2 className="mb-6 text-2xl font-semibold tracking-wide">Cart totals</h2>
+    <h2 className="mb-6 text-2xl font-semibold md:my-6">
+      <span className="text-gray-500">Cart </span>
+      <span className="font-bold">Totals</span>
+      <hr className="mt-1 w-20 border-t-2 border-black sm:w-24" />
+    </h2>
 
     <div className="mb-6 space-y-2 pb-4 text-sm">
       <div className="flex justify-between">

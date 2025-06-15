@@ -7,7 +7,7 @@ const PaymentOptions = ({ paymentMethod, setPaymentMethod }) => (
       <hr className="mt-2 w-40 border-gray-400" />
     </h3>
 
-    <div className="mb-8 flex flex-wrap gap-4">
+    <div className="mb-8 flex gap-4">
       {/* Esewa (digital for backend) */}
       <label className="flex w-[130px] cursor-pointer items-center justify-center gap-2 rounded border px-4 py-2">
         <input
@@ -27,9 +27,7 @@ const PaymentOptions = ({ paymentMethod, setPaymentMethod }) => (
           checked={paymentMethod === "cash"}
           onChange={() => setPaymentMethod("cash")}
         />
-        <span className="flex items-center gap-2 text-sm font-bold">
-          Cash on Delivery
-        </span>
+        <span className="flex items-center gap-2 text-sm font-bold">COD</span>
       </label>
     </div>
   </>

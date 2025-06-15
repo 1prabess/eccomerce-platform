@@ -1,5 +1,5 @@
 import CategoryGrid from "../components/CategoryGrid";
-import Footer from "../components/Footer";
+
 import Hero from "../components/Hero";
 import LatestProducts from "../components/LatestProducts";
 import Services from "../components/Services";
@@ -9,11 +9,10 @@ function HomePage() {
   return (
     <div className="box">
       <Hero />
+      {/* <Services /> */}
       <LatestProducts />
-      <Services />
-      <CategoryGrid />
       <TestimonialSlider />
-      <Footer />
+      <CategoryGrid />
     </div>
   );
 }
