@@ -16,6 +16,11 @@ const orderSchema = new mongoose.Schema(
           required: true,
         },
 
+        name: {
+          type: String,
+          required: true,
+        },
+
         quantity: {
           type: Number,
           required: true,
@@ -26,6 +31,11 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
           min: 0,
+        },
+
+        images: {
+          type: [String],
+          default: [],
         },
       },
     ],
@@ -84,6 +94,11 @@ const orderSchema = new mongoose.Schema(
 
     notes: {
       type: String,
+    },
+
+    shippingFee: {
+      type: Number,
+      default: 10,
     },
   },
   { timestamps: true, versionKey: false }
