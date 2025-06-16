@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useProduct } from "@/hooks/products/useProduct";
 
 import Reviews from "../components/Reviews";
@@ -7,6 +7,7 @@ import { StarRating } from "@/components/StarRating";
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useAddItemToCart } from "@/hooks/cart/useAddItemToCart";
+import { useSelector } from "react-redux";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -16,6 +17,9 @@ const ProductDetailsPage = () => {
 
   const [currentImage, setCurrentImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState("");
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const sizes = useMemo(() => {
     if (!product?.sizes) return [];
@@ -72,6 +76,10 @@ const ProductDetailsPage = () => {
   };
 
   const handleAddToCart = (product) => {
+    if (!isAuthenticated) {
+      navigate("/signin");
+      return;
+    }
     addToCart({ productId: product._id, quantity: 1, size: selectedSize });
   };
 
