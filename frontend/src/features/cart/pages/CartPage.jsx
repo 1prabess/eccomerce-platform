@@ -1,9 +1,11 @@
 import { useCart } from "@/hooks/cart/useCart";
-import CartItem from "../components/CartItem";
-import CartTotals from "../components/CartTotals";
 import { useIncreaseQuantity } from "@/hooks/cart/useIncreaseItemQuantity";
 import { useDecreaseItemQuantity } from "@/hooks/cart/useDecreaseItemQuantity";
 import { useDeleteCartItem } from "@/hooks/cart/useDeleteCartItem";
+
+import CartItem from "../components/CartItem";
+import CartTotals from "../components/CartTotals";
+import EmptyCart from "@/components/EmptyCart";
 
 function CartPage() {
   const { data } = useCart();
@@ -12,23 +14,21 @@ function CartPage() {
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
   const handleIncreaseQuantity = (item) => {
-    const newQuantity = item.quantity + 1;
-
     increaseItemQuantity({
       productId: item.productId,
-      newQuantity,
+      newQuantity: item.quantity + 1,
       size: item.size,
     });
   };
 
   const handleDecreaseQuantity = (item) => {
-    const newQuantity = item.quantity - 1;
-
-    decreaseItemQuantity({
-      productId: item.productId,
-      newQuantity,
-      size: item.size,
-    });
+    if (item.quantity > 1) {
+      decreaseItemQuantity({
+        productId: item.productId,
+        newQuantity: item.quantity - 1,
+        size: item.size,
+      });
+    }
   };
 
   const handleRemoveItem = (item) => {
@@ -48,27 +48,35 @@ function CartPage() {
 
   return (
     <div className="box">
-      <div className="">
-        <div>
-          <h2 className="mt-6 text-2xl font-semibold tracking-wide">
-            Your Cart
-          </h2>
-          {cartItems.length === 0 ? (
-            <p className="text-gray-500">Your cart is empty.</p>
-          ) : (
-            cartItems.map((item) => (
+      <div>
+        <h2 className="my-6 text-2xl font-semibold">
+          <span className="text-gray-500">My </span>
+          <span className="font-bold">Cart</span>
+          <hr className="mt-1 w-20 border-t-2 border-black sm:w-24" />
+        </h2>
+
+        {cartItems.length === 0 ? (
+          <EmptyCart />
+        ) : (
+          <div className="border-b">
+            {cartItems.map((item) => (
               <CartItem
+                key={item.id}
+                item={item}
                 onIncrease={handleIncreaseQuantity}
                 onDecrease={handleDecreaseQuantity}
                 onRemove={handleRemoveItem}
-                key={item.id}
-                item={item}
               />
-            ))
-          )}
-        </div>
-        <div> {cartItems.length > 0 && <CartTotals items={cartItems} />}</div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {cartItems.length > 0 && (
+        <div className="mt-6">
+          <CartTotals items={cartItems} />
+        </div>
+      )}
     </div>
   );
 }
