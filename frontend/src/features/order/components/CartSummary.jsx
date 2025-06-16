@@ -1,6 +1,6 @@
 const CartSummary = ({ subtotal, shippingFee, total }) => (
   <>
-    <h2 className="mb-6 text-2xl font-semibold md:my-6">
+    <h2 className="mb-6 text-2xl font-semibold md:my-6 md:pt-14">
       <span className="text-gray-500">Cart </span>
       <span className="font-bold">Totals</span>
       <hr className="mt-1 w-20 border-t-2 border-black sm:w-24" />
