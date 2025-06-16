@@ -1,7 +1,17 @@
-import { FaSearch, FaUser, FaShoppingBag } from "react-icons/fa";
+import { useLogout } from "@/hooks/auth/useLogout";
+import { FaShoppingBag, FaClipboardList } from "react-icons/fa";
+import { IoLogOut } from "react-icons/io5";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
+  const { mutate: logout } = useLogout();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <nav className="box flex items-center justify-between border-b bg-white px-6 py-4">
       {/* Logo */}
@@ -38,27 +48,38 @@ const Navbar = () => {
             Contact
           </NavLink>
         </li>
-        <li>
-          {/* <NavLink to="/admin">
-            <button className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold hover:bg-gray-100">
-              Admin Panel
-            </button>
-          </NavLink> */}
-        </li>
       </ul>
 
-      {/* Icons */}
+      {/* Right side: Authenticated vs Not authenticated */}
       <div className="flex items-center gap-5 text-xl text-gray-700">
-        <FaSearch />
-        <FaUser />
-        <div className="relative">
-          <NavLink to={"/cart"}>
-            <FaShoppingBag />
+        {isAuthenticated ? (
+          <>
+            {/* Cart Icon */}
+            <NavLink to="/cart">
+              <FaShoppingBag />
+            </NavLink>
+
+            {/* Orders Icon */}
+            <NavLink to="/orders" className="hover:text-black">
+              <FaClipboardList />
+            </NavLink>
+
+            {/* Logout Icon */}
+            <IoLogOut
+              size={26}
+              onClick={handleLogout}
+              className="cursor-pointer"
+            />
+          </>
+        ) : (
+          // Show Sign In link if NOT authenticated
+          <NavLink
+            to="/signin"
+            className="border border-gray-800 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100"
+          >
+            Sign In
           </NavLink>
-          <span className="absolute -top-2 -right-2 rounded-full bg-black px-1.5 text-[10px] leading-tight text-white">
-            0
-          </span>
-        </div>
+        )}
       </div>
     </nav>
   );
