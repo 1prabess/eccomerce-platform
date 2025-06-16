@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import App from "./App";
 import HomePage from "./features/home/pages/HomePage";
 import ProductsPage from "./features/products/page/ProductsPage";
@@ -11,56 +12,35 @@ import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
 import CartPage from "./features/cart/pages/CartPage";
 import OrderPage from "./features/order/pages/OrderPage";
 import OrdersPage from "./features/order/pages/OrdersPage";
+import AdminRoute from "./features/admin/AdminRoute";
+import AdminPage from "./features/admin/pages/AdminPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: App,
+    element: <App />,
     children: [
+      { index: true, element: <HomePage /> },
+      { path: "signin", element: <SigninPage /> },
+      { path: "signup", element: <SignupPage /> },
+      { path: "forgot-password", element: <ForgotPasswordPage /> },
       {
-        path: "/",
-        Component: HomePage,
+        path: "reset-password/:resetPasswordToken",
+        element: <ResetPasswordPage />,
       },
-
+      { path: "verify-account", element: <VerificationPage /> },
+      { path: "products", element: <ProductsPage /> },
       {
-        path: "/signin",
-        Component: SigninPage,
+        path: "products/:productSlug",
+        element: <ProductDetailsPage />,
       },
-
-      { path: "/signup", Component: SignupPage },
-
-      { path: "/forgot-password", Component: ForgotPasswordPage },
-
-      {
-        path: "/reset-password/:resetPasswordToken",
-        Component: ResetPasswordPage,
-      },
-
-      { path: "/verify-account", Component: VerificationPage },
+      { path: "cart", element: <CartPage /> },
+      { path: "order", element: <OrderPage /> },
+      { path: "orders", element: <OrdersPage /> },
 
       {
-        path: "/products",
-        Component: ProductsPage,
-      },
-
-      {
-        path: "/products/:productSlug",
-        Component: ProductDetailsPage,
-      },
-
-      {
-        path: "/cart",
-        Component: CartPage,
-      },
-
-      {
-        path: "/order",
-        Component: OrderPage,
-      },
-
-      {
-        path: "/orders",
-        Component: OrdersPage,
+        element: <AdminRoute />,
+        children: [{ path: "admin", element: <AdminPage /> }],
       },
     ],
   },
