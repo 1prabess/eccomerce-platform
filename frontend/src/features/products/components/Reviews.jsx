@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useReviews } from "@/hooks/products/useReviews";
 import { StarRating } from "@/components/StarRating";
+import { FaUserCircle } from "react-icons/fa";
 
 const Reviews = ({ productId }) => {
   const [starFilter, setStarFilter] = useState("all");
@@ -43,21 +44,28 @@ const Reviews = ({ productId }) => {
         </div>
       </div>
 
-      {/* States */}
+      {/* Review list */}
       {isPending ? (
         <p className="text-gray-500">Loading reviews...</p>
       ) : error ? (
         <p className="text-red-500">Failed to load reviews.</p>
       ) : reviews?.length > 0 ? (
-        reviews.map((review, idx) => (
-          <div key={idx} className="mb-4 border-b pb-4">
-            <div className="flex items-center justify-between">
-              <p className="font-semibold">{review.user || "Anonymous"}</p>
-              <StarRating rating={review.rating || 0} />
+        reviews.map((review, idx) => {
+          const userName = review.user || "Anonymous";
+
+          return (
+            <div key={idx} className="mb-4 border-b pb-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-[6px]">
+                  <FaUserCircle className="text-xl text-gray-600" />
+                  <p className="font-semibold">{userName}</p>
+                </div>
+                <StarRating rating={review.rating || 0} />
+              </div>
+              <p className="mt-1 text-gray-700">{review.comment}</p>
             </div>
-            <p className="mt-1 text-gray-700">{review.comment}</p>
-          </div>
-        ))
+          );
+        })
       ) : (
         <p className="text-gray-500">No reviews found.</p>
       )}
