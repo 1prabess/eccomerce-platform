@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Orders from "../components/Orders";
 import AddProduct from "../components/AddProduct";
-import ListItems from "../components/ListItems";
+import ProductList from "../components/ProductList";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("orders");
@@ -12,8 +12,8 @@ const AdminPage = () => {
         return <Orders />;
       case "addProduct":
         return <AddProduct />;
-      case "listItems":
-        return <ListItems />;
+      case "productList":
+        return <ProductList />;
       default:
         return null;
     }
@@ -54,9 +54,9 @@ const AdminPage = () => {
             </li>
             <li className="flex-1">
               <button
-                onClick={() => setActiveTab("listItems")}
+                onClick={() => setActiveTab("productList")}
                 className={`w-full px-4 py-2 text-left whitespace-nowrap md:text-left ${
-                  activeTab === "listItems"
+                  activeTab === "productList"
                     ? "bg-black text-white"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
