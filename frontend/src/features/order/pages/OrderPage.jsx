@@ -32,12 +32,14 @@ const OrderPage = () => {
   }, [cart, navigate]);
 
   const cartProducts =
-    cart?.cartItems?.map((item) => ({
-      productId: item.productId._id,
-      quantity: item.quantity,
-      priceAtPurchase: item.priceAtAddTime,
-      size: item.size,
-    })) || [];
+    cart?.cartItems
+      ?.filter((item) => item.productId && item.productId._id)
+      .map((item) => ({
+        productId: item.productId._id,
+        quantity: item.quantity,
+        priceAtPurchase: item.priceAtAddTime,
+        size: item.size,
+      })) || [];
 
   const subtotal = cartProducts.reduce(
     (acc, item) => acc + item.priceAtPurchase * item.quantity,
