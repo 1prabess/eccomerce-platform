@@ -5,11 +5,8 @@ import { useProducts } from "@/hooks/products/useProducts";
 import { StarRating } from "@/components/StarRating";
 
 const LatestProducts = () => {
-  const {
-    data: latestProducts,
-    isPending,
-    error,
-  } = useProducts({ limit: 9, page: 1 });
+  const { data, isPending, error } = useProducts({ limit: 6 });
+
   const navigate = useNavigate();
 
   const handleSelectProduct = (productSlug) => {
@@ -26,10 +23,21 @@ const LatestProducts = () => {
     );
   }
 
+  const products = data?.data?.products || [];
+
+  const parseSizes = (sizesArray) => {
+    if (!Array.isArray(sizesArray) || sizesArray.length === 0) return [];
+    try {
+      return JSON.parse(sizesArray[0]);
+    } catch {
+      return [];
+    }
+  };
+
   return (
     <div className="mt-10">
       <div className="mb-10 text-center">
-        <h2 className="text-3xl font-semibold tracking-wide md:text-5xl">
+        <h2 className="text-3xl font-semibold tracking-wide md:text-4xl">
           Latest <span className="text-gray-600">Products</span>
         </h2>
         <p className="mt-2 text-gray-600">
@@ -39,9 +47,9 @@ const LatestProducts = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {latestProducts?.products.map((product, idx) => (
+        {products.map((product, idx) => (
           <div
-            key={idx}
+            key={product._id || idx}
             className="cursor-pointer overflow-hidden rounded border"
             onClick={() => handleSelectProduct(product.slug)}
           >
@@ -72,7 +80,7 @@ const LatestProducts = () => {
               </div>
 
               <div className="mt-2 text-sm text-gray-600">
-                Sizes: {JSON.parse(product.sizes).join(", ")}
+                Sizes: {parseSizes(product.sizes).join(", ")}
               </div>
 
               {product.discount > 0 && (

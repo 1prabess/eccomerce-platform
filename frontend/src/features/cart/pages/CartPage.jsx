@@ -36,15 +36,17 @@ function CartPage() {
   };
 
   const cartItems =
-    data?.cartItems?.map((cart) => ({
-      id: cart._id,
-      name: cart.productId.name,
-      price: cart.priceAtAddTime,
-      quantity: cart.quantity,
-      image: cart.productId.images?.[0],
-      size: cart.size,
-      productId: cart.productId._id,
-    })) || [];
+    data?.cartItems
+      ?.filter((cart) => cart.productId)
+      .map((cart) => ({
+        id: cart._id,
+        name: cart.productId.name,
+        price: cart.priceAtAddTime,
+        quantity: cart.quantity,
+        image: cart.productId.images?.[0],
+        size: cart.size,
+        productId: cart.productId._id,
+      })) || [];
 
   return (
     <div className="box">
