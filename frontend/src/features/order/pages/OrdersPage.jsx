@@ -1,9 +1,12 @@
 import EmptyOrders from "@/components/EmptyOrders";
 import { useOrders } from "@/hooks/order/useOrders";
 import { format } from "date-fns";
+import ReviewModal from "@/components/ReviewModal";
+import { useState } from "react";
 
 const OrdersPage = () => {
   const { data: orders, isLoading, isError } = useOrders();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   if (isLoading)
     return <p className="p-6 text-center text-gray-600">Loading orders…</p>;
@@ -13,7 +16,7 @@ const OrdersPage = () => {
     );
 
   return (
-    <div className="box">
+    <div className="box relative">
       <h2 className="my-6 text-2xl font-semibold">
         <span className="text-gray-500">My </span>
         <span className="font-bold">Orders</span>
@@ -54,7 +57,7 @@ const OrdersPage = () => {
                 {order.products.map((product) => (
                   <div
                     key={product._id}
-                    className="flex items-center gap-4 border border-gray-100 bg-gray-50 p-3"
+                    className="flex flex-col gap-3 border border-gray-100 bg-gray-50 p-3 sm:flex-row sm:items-center"
                   >
                     <img
                       src={
@@ -79,6 +82,16 @@ const OrdersPage = () => {
                         )}
                       </p>
                     </div>
+
+                    {/* Write Review Button */}
+                    {order.orderStatus === "delivered" && (
+                      <button
+                        onClick={() => setSelectedProduct(product)}
+                        className="mt-2 w-full bg-black px-3 py-1.5 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                      >
+                        Write a Review
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
@@ -96,6 +109,14 @@ const OrdersPage = () => {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Modal */}
+      {selectedProduct && (
+        <ReviewModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
       )}
     </div>
   );
