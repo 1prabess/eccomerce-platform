@@ -5,7 +5,7 @@ const ProductsPage = () => {
   const [filters, setFilters] = useState({
     category: "",
     subCategory: "",
-    limit: 20,
+    limit: 10,
   });
 
   return (
