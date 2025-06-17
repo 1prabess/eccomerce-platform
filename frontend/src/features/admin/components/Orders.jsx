@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAllOrders } from "@/hooks/order/useAllOrders";
+import { useUpdateOrderStatus } from "@/hooks/order/useUpdateOrderStatus";
 
 const statusColor = {
   pending: "bg-yellow-100 text-yellow-800",
@@ -10,16 +11,8 @@ const statusColor = {
   default: "bg-gray-100 text-gray-800",
 };
 
-const paymentColor = {
-  paid: "text-green-600 font-medium",
-  pending: "text-yellow-600 font-medium",
-  failed: "text-red-600 font-medium",
-  default: "text-gray-700 font-medium",
-};
-
 const Orders = () => {
   const [orderStatus, setOrderStatus] = useState("all");
-  const [paymentStatus, setPaymentStatus] = useState("all");
   const [page, setPage] = useState(1);
   const limit = 5;
 
@@ -27,14 +20,25 @@ const Orders = () => {
     page,
     limit,
     orderStatus: orderStatus === "all" ? undefined : orderStatus,
-    paymentStatus: paymentStatus === "all" ? undefined : paymentStatus,
   };
 
   const { data: orders = [], isLoading, isError } = useAllOrders(filters);
+  const { mutate: updateOrderStatus } = useUpdateOrderStatus();
 
   useEffect(() => {
     setPage(1);
-  }, [orderStatus, paymentStatus]);
+  }, [orderStatus]);
+
+  const handleStatusChange = (orderId, newStatus) => {
+    const data = {
+      orderID: orderId,
+      updateData: {
+        orderStatus: newStatus,
+      },
+    };
+
+    updateOrderStatus(data);
+  };
 
   if (isLoading) return <p className="p-6 text-center">Loading orders...</p>;
   if (isError)
@@ -43,38 +47,22 @@ const Orders = () => {
     );
 
   return (
-    <div className="">
-      {/* Filters */}
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        <div>
-          <label className="mb-1 block font-semibold">Order Status</label>
-          <select
-            value={orderStatus}
-            onChange={(e) => setOrderStatus(e.target.value)}
-            className="w-full border border-gray-300 p-2 focus:ring focus:outline-none"
-          >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="shipped">Shipped</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="mb-1 block font-semibold">Payment Status</label>
-          <select
-            value={paymentStatus}
-            onChange={(e) => setPaymentStatus(e.target.value)}
-            className="w-full border border-gray-300 p-2 focus:ring focus:outline-none"
-          >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="paid">Paid</option>
-            <option value="failed">Failed</option>
-          </select>
-        </div>
+    <div>
+      {/* Filter */}
+      <div className="mb-6 w-64">
+        <label className="mb-1 block font-semibold">Order Status</label>
+        <select
+          value={orderStatus}
+          onChange={(e) => setOrderStatus(e.target.value)}
+          className="w-full border border-gray-300 bg-white p-2 focus:ring focus:outline-none"
+        >
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
       </div>
 
       {/* Orders List */}
@@ -84,10 +72,7 @@ const Orders = () => {
         )}
 
         {orders.map((order) => (
-          <div
-            key={order._id}
-            className="-md -sm border border-gray-200 bg-white p-5"
-          >
+          <div key={order._id} className="border border-gray-200 bg-white p-5">
             <div className="mb-3 flex flex-col justify-between sm:flex-row sm:items-center">
               <div>
                 <h2 className="text-lg font-semibold break-words">
@@ -102,13 +87,21 @@ const Orders = () => {
               </div>
 
               <div className="mt-2 sm:mt-0">
-                <span
-                  className={`-full inline-block px-3 py-1 text-sm capitalize ${
+                <select
+                  value={order.orderStatus}
+                  onChange={(e) =>
+                    handleStatusChange(order._id, e.target.value)
+                  }
+                  className={`rounded border px-3 py-1 text-sm capitalize ${
                     statusColor[order.orderStatus] || statusColor.default
                   }`}
                 >
-                  {order.orderStatus}
-                </span>
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
               </div>
             </div>
 
@@ -130,7 +123,7 @@ const Orders = () => {
                 {order.products.map((product) => (
                   <div
                     key={product._id}
-                    className="-md flex flex-col gap-4 border border-gray-100 bg-gray-50 p-3 sm:flex-row sm:items-center"
+                    className="flex flex-col gap-4 border border-gray-100 bg-gray-50 p-3 sm:flex-row sm:items-center"
                   >
                     <img
                       src={product.images[0]}
@@ -144,7 +137,7 @@ const Orders = () => {
                         {product.priceAtPurchase}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Total: $
+                        Total:{" "}
                         {(product.quantity * product.priceAtPurchase).toFixed(
                           2,
                         )}
@@ -161,16 +154,6 @@ const Orders = () => {
                 <p>
                   <span className="font-semibold">Payment Method: </span>
                   {order.paymentMethod}
-                </p>
-                <p>
-                  <span className="font-semibold">Payment Status: </span>
-                  <span
-                    className={
-                      paymentColor[order.paymentStatus] || paymentColor.default
-                    }
-                  >
-                    {order.paymentStatus}
-                  </span>
                 </p>
               </div>
 
