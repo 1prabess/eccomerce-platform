@@ -11,7 +11,7 @@ function CartItem({ item, onIncrease, onDecrease, onRemove }) {
           className="h-fit w-24 border border-gray-200 object-cover"
         />
         <div>
-          <h3 className="text-lg text-gray-900">{item.name}</h3>
+          <h3 className="text-lg font-semibold text-gray-600">{item.name}</h3>
           <p className="text-md mt-1 font-medium text-gray-700">
             ${item.price.toFixed(2)}
           </p>
