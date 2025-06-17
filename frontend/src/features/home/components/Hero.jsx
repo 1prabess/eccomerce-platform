@@ -6,8 +6,8 @@ export default function Hero() {
       {/* Main Content */}
       <div className="relative z-10 mx-auto flex flex-col items-center justify-between gap-8 md:flex-row lg:px-8">
         <div className="order-1 w-full text-center md:order-none md:text-left">
-          <h1 className="text-5xl font-bold sm:text-6xl md:text-7xl lg:text-7xl lg:leading-none">
-            Explore our ultimate
+          <h1 className="text-5xl font-bold sm:text-6xl">
+            Discover our ultimate
           </h1>
           <h2 className="stroke-text mt-2 text-6xl font-bold text-transparent sm:text-7xl md:text-8xl lg:text-[6rem] lg:leading-none">
             Collection.
