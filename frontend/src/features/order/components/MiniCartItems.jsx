@@ -2,7 +2,7 @@ import React from "react";
 
 function MiniCartItems({ items = [] }) {
   return (
-    <div className="mb-6 space-y-1 border p-4">
+    <div className="space-y-1 border p-4">
       <h3 className="text-lg font-semibold text-gray-800">Items in Cart</h3>
 
       {items

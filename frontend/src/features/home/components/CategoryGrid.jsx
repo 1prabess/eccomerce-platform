@@ -13,7 +13,7 @@ const categories = [
 
 const CategoryGrid = () => {
   return (
-    <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-2">
       {categories.map((cat, index) => (
         <a
           key={index}

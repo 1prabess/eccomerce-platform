@@ -46,8 +46,9 @@ const OrdersPage = () => {
 
                 <div className="flex items-center gap-2 text-sm">
                   <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                  <span className="font-medium text-green-700 uppercase">
-                    {order.orderStatus}
+                  <span className="font-medium text-green-700">
+                    {order.orderStatus.charAt(0).toUpperCase() +
+                      order.orderStatus.slice(1).toLowerCase()}
                   </span>
                 </div>
               </div>
@@ -87,9 +88,9 @@ const OrdersPage = () => {
                     {order.orderStatus === "delivered" && (
                       <button
                         onClick={() => setSelectedProduct(product)}
-                        className="mt-2 w-full bg-black px-3 py-1.5 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                        className="mt-2 w-full bg-black px-3 py-1.5 text-sm text-white sm:mt-0 sm:w-auto"
                       >
-                        Write a Review
+                        Review Product
                       </button>
                     )}
                   </div>

@@ -28,7 +28,7 @@ export default function Hero() {
         </div>
 
         <div className="relative order-2 w-full max-w-xl bg-neutral-200 md:order-none">
-          <img src="/heroo.png" alt="Model" className="mx-auto" />
+          <img src="/hero.png" alt="Model" className="mx-auto" />
 
           <div className="absolute top-10 left-10 hidden w-32 bg-white p-3 text-sm sm:w-36 sm:p-2 md:w-24 lg:block lg:w-40">
             <img src="/hero-mini1.jpg" alt="Bucket Denim" className="w-full" />

@@ -18,7 +18,7 @@ const Services = () => {
   ];
 
   return (
-    <div className="my-10 grid grid-cols-1 divide-y divide-gray-200 border-y text-center md:my-20 md:grid-cols-3 md:divide-x md:divide-y-0">
+    <div className="mt-10 grid grid-cols-1 divide-y divide-gray-200 border-y text-center md:grid-cols-3 md:divide-x md:divide-y-0">
       {services.map((service, idx) => (
         <div key={idx} className="p-8">
           <h3 className="text-lg font-semibold tracking-wider text-gray-900 uppercase">

@@ -105,7 +105,7 @@ const Products = ({ filters, setFilters }) => {
       {/* Pagination Controls */}
       <div className="mt-8 flex justify-center space-x-4">
         <button
-          className="rounded border border-gray-300 px-4 py-2 disabled:opacity-50"
+          className="w-24 rounded border border-gray-300 px-4 py-2 text-sm disabled:opacity-50"
           disabled={!pagination.hasPrevPage}
           onClick={() => goToPage(pagination.currentPage - 1)}
         >
@@ -117,7 +117,7 @@ const Products = ({ filters, setFilters }) => {
         </span>
 
         <button
-          className="rounded border border-gray-300 px-4 py-2 disabled:opacity-50"
+          className="w-24 rounded border border-gray-300 px-4 py-2 text-sm disabled:opacity-50"
           disabled={!pagination.hasNextPage}
           onClick={() => goToPage(pagination.currentPage + 1)}
         >
