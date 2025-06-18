@@ -9,8 +9,12 @@ import { logout } from "../controllers/auth/logout.controller.js";
 import { verifyAccount } from "../controllers/auth/verifyAccount.controller.js";
 import { forgotPassword } from "../controllers/auth/forgotPassword.controller.js";
 import { resetPassword } from "../controllers/auth/resetPassword.controller.js";
+import { checkAuth } from "../controllers/auth/checkAuth.controller.js";
+import authenticateOptional from "../middlewares/authenticateOptional.middleware.js";
 
 const authRouter = express.Router();
+
+authRouter.get("/auth/check-auth", authenticateOptional, checkAuth);
 
 authRouter.post("/auth/signup", signup);
 
