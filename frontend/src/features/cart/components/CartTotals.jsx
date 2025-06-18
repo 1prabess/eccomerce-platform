@@ -9,7 +9,7 @@ function CartTotals({ items }) {
   );
 
   return (
-    <div className="mt-4 w-full items-center md:mt-4">
+    <div className="w-full items-center md:mt-4">
       <div className="flex justify-end">
         <button
           onClick={() => navigate("/order")}
