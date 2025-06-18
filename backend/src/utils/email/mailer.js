@@ -14,7 +14,7 @@ async function mailer(template, recipient, subject, text) {
     });
 
     const mailOptions = {
-      from: `"Ecommerce App" <${process.env.PLATFORM_EMAIL}>`,
+      from: `"Wearvio" <${process.env.PLATFORM_EMAIL}>`,
       to: recipient,
       replyTo: process.env.PLATFORM_EMAIL,
       subject,
