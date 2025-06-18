@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Orders from "../components/Orders";
 import AddProduct from "../components/AddProduct";
 import ProductList from "../components/ProductList";
+import { MdAdminPanelSettings } from "react-icons/md";
+import AdminSignup from "../components/AdminSignup";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("orders");
@@ -14,6 +16,8 @@ const AdminPage = () => {
         return <AddProduct />;
       case "productList":
         return <ProductList />;
+      case "adminSignup":
+        return <AdminSignup />;
       default:
         return null;
     }
@@ -24,8 +28,8 @@ const AdminPage = () => {
       <div className="flex min-h-screen flex-col md:flex-row">
         {/* Sidebar / Top nav */}
         <nav className="flex w-full overflow-x-auto border-b border-gray-200 bg-white p-4 md:w-64 md:flex-col md:border-r md:border-b-0 md:p-6">
-          <h2 className="mb-8 hidden text-2xl font-bold md:block">
-            Admin Panel
+          <h2 className="mb-8 hidden items-center gap-2 text-center text-2xl font-bold md:flex">
+            <MdAdminPanelSettings /> Admin Panel
           </h2>
           <ul className="flex w-full gap-1 md:flex-col">
             <li className="flex-1">
@@ -62,6 +66,19 @@ const AdminPage = () => {
                 }`}
               >
                 List Items
+              </button>
+            </li>
+
+            <li className="flex-1">
+              <button
+                onClick={() => setActiveTab("adminSignup")}
+                className={`w-full px-4 py-2 text-left whitespace-nowrap md:text-left ${
+                  activeTab === "adminSignup"
+                    ? "bg-black text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                Sign up admin
               </button>
             </li>
           </ul>
