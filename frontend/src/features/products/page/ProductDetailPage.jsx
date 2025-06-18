@@ -1,18 +1,18 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProduct } from "@/hooks/products/useProduct";
-
 import Reviews from "../components/Reviews";
 import { StarRating } from "@/components/StarRating";
-
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useAddItemToCart } from "@/hooks/cart/useAddItemToCart";
 import { useSelector } from "react-redux";
+import { useCart } from "@/hooks/cart/useCart";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
   const { data, isPending, error } = useProduct(productSlug);
   const { mutate: addToCart } = useAddItemToCart();
+  const { data: cart } = useCart();
   const product = data?.product;
 
   const [currentImage, setCurrentImage] = useState(0);
@@ -82,6 +82,10 @@ const ProductDetailsPage = () => {
     }
     addToCart({ productId: product._id, quantity: 1, size: selectedSize });
   };
+
+  const isInCart = cart?.cartItems?.some(
+    (item) => item.productId._id === product._id && item.size === selectedSize,
+  );
 
   return (
     <div className="box grid min-h-screen grid-cols-1 bg-white md:grid-cols-2">
@@ -213,15 +217,15 @@ const ProductDetailsPage = () => {
         </div>
 
         <button
-          disabled={!selectedSize || product.stock === 0}
+          disabled={!selectedSize || product.stock === 0 || isInCart}
           onClick={() => handleAddToCart(product)}
           className={`mt-4 w-full py-3 text-sm font-semibold uppercase ${
-            selectedSize && product.stock > 0
-              ? "bg-black text-white hover:opacity-90"
-              : "cursor-not-allowed bg-gray-300 text-gray-600"
+            !selectedSize || product.stock === 0 || isInCart
+              ? "cursor-not-allowed bg-gray-300 text-gray-600"
+              : "bg-black text-white hover:opacity-90"
           }`}
         >
-          Add to Cart
+          {isInCart ? "Added to Cart" : "Add to Cart"}
         </button>
 
         <div className="mt-8 space-y-2 text-sm text-gray-600">
