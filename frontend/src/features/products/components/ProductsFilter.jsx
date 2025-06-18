@@ -1,8 +1,8 @@
 import React from "react";
 
 const ProductsFilter = ({ filters, setFilters }) => {
-  const categories = ["All", "Men", "Women", "Kids"];
-  const subCategories = ["Topwear", "Bottomwear", "Winterwear"];
+  const categories = ["All", "Men", "Women"];
+  const subCategories = ["Topwear", "Bottomwear"];
 
   const handleClick = (value, type) => {
     if (value === "All") {
