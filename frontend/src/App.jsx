@@ -6,17 +6,23 @@ import { Toaster } from "react-hot-toast";
 import Footer from "./features/home/components/Footer";
 import { useCheckAuth } from "./hooks/auth/useCheckAuth";
 import { useDispatch } from "react-redux";
-import { setUser } from "./store/authSlice";
+import { clearUser, setLoading, setUser } from "./store/authSlice";
 
 function App() {
-  const { data } = useCheckAuth();
+  const { data, isLoading } = useCheckAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data?.user != null) {
-      dispatch(setUser(data));
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  useEffect(() => {
+    if (data?.user) {
+      dispatch(setUser(data.user));
+    } else if (!isLoading && !data?.user) {
+      dispatch(clearUser());
     }
-  }, [data, dispatch]);
+  }, [data, isLoading, dispatch]);
 
   return (
     <div>
