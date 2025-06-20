@@ -1,6 +1,7 @@
 import { useCreateReview } from "@/hooks/products/useCreateReview";
 import { useState } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { IoClose } from "react-icons/io5"; // Close (X) icon
 
 const ReviewModal = ({ product, onClose }) => {
   const [rating, setRating] = useState(0);
@@ -24,6 +25,14 @@ const ReviewModal = ({ product, onClose }) => {
       <div className="absolute inset-0 bg-black opacity-40" onClick={onClose} />
 
       <div className="relative z-10 w-[90%] max-w-md bg-white p-6 shadow-xl">
+        {/* X Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-2xl text-gray-600 hover:text-black"
+        >
+          <IoClose />
+        </button>
+
         <h2 className="mb-4 text-xl font-bold">Write a Review</h2>
 
         <p className="mb-2 font-semibold text-gray-700">{product.name}</p>
