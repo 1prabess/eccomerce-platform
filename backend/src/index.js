@@ -9,13 +9,14 @@ import productRouter from "./routes/product.route.js";
 import orderRouter from "./routes/order.route.js";
 import reviewRouter from "./routes/review.route.js";
 import cartRouter from "./routes/cart.route.js";
+import paymentRouter from "./routes/payment.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5175", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -26,6 +27,7 @@ app.use("/api", productRouter);
 app.use("/api", orderRouter);
 app.use("/api", reviewRouter);
 app.use("/api", cartRouter);
+app.use("/api", paymentRouter);
 
 app.listen(PORT, async () => {
   try {
