@@ -7,6 +7,7 @@ import authorizeRoles from "../middlewares/authorize.middleware.js";
 import { getMyOrders } from "../controllers/order/getMyOrders.controller.js";
 import { getOrder } from "../controllers/order/getOrder.controller.js";
 import { updateOrderStatus } from "../controllers/order/updateOrderStatus.controller.js";
+import { updateOrderPaymentStatus } from "../controllers/order/updateOrderPaymentStatus.controller.js";
 
 const orderRouter = express.Router();
 
@@ -23,6 +24,12 @@ orderRouter.patch(
   authenticate,
   authorizeRoles("admin"),
   updateOrderStatus
+);
+
+orderRouter.patch(
+  "/orders/:id/payment-status",
+  authenticate,
+  updateOrderPaymentStatus
 );
 
 export default orderRouter;
