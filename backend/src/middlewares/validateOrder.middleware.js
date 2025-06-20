@@ -62,7 +62,7 @@ export const validateOrder = async (req, res, next) => {
       .json({ message: "Complete shipping address is required." });
 
   // Validate payment method is either 'digital' or 'cash'
-  if (!["digital", "cash"].includes(paymentMethod))
+  if (!["esewa", "khalti", "cash"].includes(paymentMethod))
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Invalid payment method." });
