@@ -14,6 +14,9 @@ import OrderPage from "./features/order/pages/OrderPage";
 import OrdersPage from "./features/order/pages/OrdersPage";
 import AdminRoute from "./features/admin/AdminRoute";
 import AdminPage from "./features/admin/pages/AdminPage";
+import PaymentSuccess from "./features/payment/pages/PaymentSuccess";
+import PaymentFailure from "./features/payment/pages/PaymentFailure";
+import PaymentComponent from "./features/payment/pages/PaymentForm";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +40,9 @@ export const router = createBrowserRouter([
       { path: "cart", element: <CartPage /> },
       { path: "order", element: <OrderPage /> },
       { path: "orders", element: <OrdersPage /> },
+      { path: "payment-form", element: <PaymentComponent /> },
+      { path: "payment-success", element: <PaymentSuccess /> },
+      { path: "payment-failure", element: <PaymentFailure /> },
 
       {
         element: <AdminRoute />,
