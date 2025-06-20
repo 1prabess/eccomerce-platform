@@ -9,10 +9,26 @@ export const createOrder = async (req, res) => {
     const {
       products,
       shippingAddress,
-      paymentMethod = "digital",
+      paymentMethod = "cash",
       notes,
       shippingFee,
+      phone,
+      fullName,
+      email,
     } = req.body;
+
+    // Validate required fields
+    if (!phone || !fullName || !email) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Phone, full name, and email are required.",
+      });
+    }
+
+    if (!Array.isArray(products) || products.length === 0) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Products array is required." });
+    }
 
     // Calculate total price
     let totalPrice = 0;
@@ -21,13 +37,9 @@ export const createOrder = async (req, res) => {
     });
 
     // Add shipping fee
-    if (shippingFee) {
-      totalPrice += shippingFee;
-    } else {
-      totalPrice += 10;
-    }
+    totalPrice += shippingFee || 10;
 
-    // Enrich products with images using a simple for...of loop
+    // Enrich products with data from DB
     const enrichedProducts = [];
     for (const item of products) {
       const productFromDb = await Product.findById(item.productId).select(
@@ -40,18 +52,23 @@ export const createOrder = async (req, res) => {
       });
     }
 
+    // Create order
     const order = new Order({
       userId,
+      phone,
+      fullName,
+      email,
       products: enrichedProducts,
       totalPrice,
       shippingAddress,
       paymentMethod,
       notes,
+      shippingFee: shippingFee || 10,
     });
 
     await order.save();
 
-    // Decrement stock of product once order is placed
+    // Decrement stock for each product
     for (const product of products) {
       const productToDecrement = await Product.findById(product.productId);
       if (productToDecrement) {
@@ -64,7 +81,7 @@ export const createOrder = async (req, res) => {
       .status(StatusCodes.CREATED)
       .json({ message: "Order created successfully!", order });
   } catch (error) {
-    console.log("Error in createOrder: ", error);
+    console.error("Error in createOrder:", error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong. Please try again later." });
