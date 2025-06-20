@@ -8,6 +8,21 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
+    phone: {
+      type: String,
+      required: true,
+    },
+
+    fullName: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+    },
+
     products: [
       {
         productId: {
@@ -75,15 +90,15 @@ const orderSchema = new mongoose.Schema(
 
     paymentMethod: {
       type: String,
-      enum: ["digital", "cash"],
+      enum: ["esewa", "khalti", "cash"],
       required: true,
-      default: "digital",
+      default: "cash",
     },
 
     paymentStatus: {
       type: String,
-      enum: ["pending", "paid", "failed"],
-      default: "pending",
+      enum: ["PENDING", "COMPLETED", "FAILED", "REFUNDED"],
+      default: "PENDING",
     },
 
     orderStatus: {
