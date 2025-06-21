@@ -73,11 +73,11 @@ const OrdersPage = () => {
                         {product.name}
                       </p>
                       <p className="text-sm text-gray-600">
-                        Quantity: {product.quantity} &bull; $
+                        Quantity: {product.quantity} &bull; Rs.
                         {product.priceAtPurchase} each
                       </p>
                       <p className="text-sm text-gray-500">
-                        Subtotal: $
+                        Subtotal: Rs.
                         {(product.quantity * product.priceAtPurchase).toFixed(
                           2,
                         )}
@@ -99,12 +99,41 @@ const OrdersPage = () => {
 
               {/* Payment and Total */}
               <div className="mt-4 flex flex-col justify-between gap-2 border-t pt-4 text-sm text-gray-700 sm:flex-row sm:items-center">
-                <p>
-                  <span className="font-medium text-gray-800">Payment:</span>{" "}
-                  {order.paymentMethod}
-                </p>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-gray-800">Payment:</span>
+                    {order.paymentMethod === "esewa" && (
+                      <div className="flex items-center gap-1">
+                        <img
+                          src="/esewa-logo.png"
+                          alt="eSewa"
+                          className="h-4 w-auto"
+                        />{" "}
+                        <span>Esewa</span>{" "}
+                      </div>
+                    )}
+                    {order.paymentMethod === "khalti" && (
+                      <div className="flex items-center gap-1">
+                        <img
+                          src="/khalti-logo.png"
+                          alt="khalti"
+                          className="h-4 w-auto"
+                        />
+                        <span>Khalti</span>
+                      </div>
+                    )}
+                    {order.paymentMethod === "cash" && <span>Cash</span>}
+                  </div>
+                  <div className="mt-1">
+                    <span className="font-medium text-gray-800">
+                      Payment Status:{" "}
+                    </span>
+                    {order.paymentStatus.charAt(0).toUpperCase() +
+                      order.paymentStatus.slice(1).toLowerCase()}
+                  </div>
+                </div>
                 <p className="text-base font-semibold text-gray-900">
-                  Total: ${order.totalPrice.toFixed(2)}
+                  Total: Rs. {order.totalPrice.toFixed(2)}
                 </p>
               </div>
             </div>
