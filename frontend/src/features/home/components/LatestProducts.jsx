@@ -36,16 +36,6 @@ const LatestProducts = () => {
 
   return (
     <div className="mt-10">
-      {/* <div className="mb-10 text-center">
-        <h2 className="text-3xl font-semibold tracking-wide md:text-4xl">
-          Latest <span className="text-gray-600">Products</span>
-        </h2>
-        <p className="mt-2 text-gray-600">
-          Discover our newest arrivals — curated styles, premium materials, and
-          standout designs made for the season. Shop the latest trends now.
-        </p>
-      </div> */}
-
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product, idx) => (
           <div
@@ -90,7 +80,7 @@ const LatestProducts = () => {
               )}
 
               <p className="mt-3 text-2xl font-bold text-gray-800">
-                ${product.price}
+                Rs. {product.price}
               </p>
             </div>
           </div>
