@@ -94,7 +94,7 @@ const Products = ({ filters, setFilters }) => {
                 )}
 
                 <p className="mt-3 text-2xl font-bold text-gray-800">
-                  ${product.price}
+                  Rs. {product.price}
                 </p>
               </div>
             </div>
