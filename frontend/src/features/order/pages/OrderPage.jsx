@@ -9,6 +9,9 @@ import CartSummary from "../components/CartSummary";
 import AddressForm from "../components/AddressForm";
 import MiniCartItems from "../components/MiniCartItems";
 
+import { useInitiatePayment } from "@/hooks/payment/useInitiatePayment";
+import { useSelector } from "react-redux";
+
 const OrderPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [shippingAddress, setShippingAddress] = useState({
@@ -21,9 +24,21 @@ const OrderPage = () => {
   });
   const [errors, setErrors] = useState({});
 
+  const { user } = useSelector((state) => state.auth);
+  const fullName = user?.fullName || "";
+  const email = user?.email || "";
+
   const createOrder = useCreateOrder();
+  const { isLoading: isPaying } = useInitiatePayment();
+
   const { data: cart } = useCart();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     if (!cart || cart.cartItems?.length === 0) {
@@ -79,6 +94,9 @@ const OrderPage = () => {
       paymentMethod,
       notes: "Leave at the door",
       shippingFee,
+      phone: shippingAddress.phone,
+      fullName,
+      email,
     };
 
     createOrder.mutate(orderData);
@@ -109,7 +127,7 @@ const OrderPage = () => {
           />
           <PlaceOrderButton
             onClick={handlePlaceOrder}
-            isLoading={createOrder.isLoading}
+            isLoading={createOrder.isLoading || isPaying}
           />
         </div>
       </div>
