@@ -94,13 +94,11 @@ function Footer() {
           </div>
           {/* Copyright */}
           <div className="text-center md:text-left">
-            Copyright © 2000–2025 Moncler S.P.A. All rights reserved.{" "}
-            <a href="#" className="underline">
-              Corporate info
-            </a>
+            Copyright ©2025 Wearvio by Prabess
+            <a href="#" className="underline"></a>
           </div>
           {/* Version info */}
-          <div className="text-right text-gray-400">13.7.2-20231204.1422</div>
+          <div className="text-right text-gray-400">1.0</div>
         </div>
       </div>
     </footer>

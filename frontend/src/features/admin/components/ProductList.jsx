@@ -240,21 +240,21 @@ const ProductList = () => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-4 flex flex-col items-center justify-between gap-2 text-sm sm:flex-row">
+      <div className="mt-4 flex flex-col items-center justify-center gap-2 text-sm sm:flex-row">
         <button
           onClick={handlePreviousPage}
           disabled={page === 1}
-          className="rounded border px-4 py-1 disabled:opacity-50"
+          className="w-24 rounded border bg-white px-4 py-1 transition-all hover:bg-gray-200 disabled:opacity-80"
         >
           Previous
         </button>
-        <span className="text-gray-600">
+        <span className="text-gray-800">
           Page {page} of {totalPages}
         </span>
         <button
           onClick={handleNextPage}
           disabled={page === totalPages}
-          className="rounded border px-4 py-1 disabled:opacity-50"
+          className="w-24 rounded border bg-white px-4 py-1 transition-all hover:bg-gray-200 disabled:opacity-80"
         >
           Next
         </button>
