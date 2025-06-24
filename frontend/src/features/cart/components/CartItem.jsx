@@ -13,7 +13,7 @@ function CartItem({ item, onIncrease, onDecrease, onRemove }) {
         <div>
           <h3 className="text-lg font-semibold text-gray-600">{item.name}</h3>
           <p className="text-md mt-1 font-medium text-gray-700">
-            ${item.price.toFixed(2)}
+            Rs. {item.price.toFixed(2)}
           </p>
           <p className="mt-1 text-sm text-gray-500">Size: {item.size}</p>
         </div>

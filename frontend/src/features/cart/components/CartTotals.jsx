@@ -15,7 +15,7 @@ function CartTotals({ items }) {
           onClick={() => navigate("/order")}
           className="w-fit bg-black px-4 py-3 text-white hover:bg-gray-800"
         >
-          Checkout: ${total.toFixed(2)}
+          Checkout: Rs. {total.toFixed(2)}
         </button>
       </div>
     </div>
