@@ -202,7 +202,7 @@ const AddProduct = () => {
               onClick={() => toggleSize(size)}
               className={`border px-4 py-1 text-sm font-medium ${
                 selectedSizes.includes(size)
-                  ? "border-gray-500 bg-white text-gray-900"
+                  ? "border-gray-500 bg-black text-white"
                   : "border-gray-300 bg-gray-100 text-gray-700"
               }`}
             >
