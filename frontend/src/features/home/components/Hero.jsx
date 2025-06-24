@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const navigate = useNavigate();
+
   return (
     <section className="relative mt-10 overflow-hidden bg-white sm:mt-4">
       {/* Main Content */}
@@ -22,7 +25,10 @@ export default function Hero() {
             identifiable for others. <br />
             Check out our collection to identify who you are.
           </p>
-          <button className="bg-[#1A1A1A] px-8 py-3 text-sm font-medium text-white shadow-md">
+          <button
+            onClick={() => navigate("/products")}
+            className="bg-[#1A1A1A] px-8 py-3 text-sm font-medium text-white shadow-md"
+          >
             Shop Now
           </button>
         </div>
