@@ -28,7 +28,7 @@ function MiniCartItems({ items = [] }) {
             </div>
 
             <p className="text-sm font-semibold text-gray-700">
-              ${item.priceAtAddTime * item.quantity}
+              Rs. {item.priceAtAddTime * item.quantity}
             </p>
           </div>
         ))}
