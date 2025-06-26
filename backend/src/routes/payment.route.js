@@ -1,13 +1,11 @@
 import express from "express";
-import {
-  initiatePayment,
-  paymentStatus,
-} from "../controllers/payment/payment.controller.js";
+import { initiatePayment } from "../controllers/payment/initatePayment.controller.js";
+import { verifyAndUpdatePaymentStatus } from "../controllers/payment/verifyAndUpdatePaymentStatus.js";
 
 const paymentRouter = express.Router();
 
-paymentRouter.post("/initiate-payment", initiatePayment);
+paymentRouter.post("/payment/initiate", initiatePayment);
 
-paymentRouter.post("/payment-status", paymentStatus);
+paymentRouter.post("/payment/status", verifyAndUpdatePaymentStatus);
 
 export default paymentRouter;
